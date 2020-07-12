@@ -1,0 +1,19 @@
+package com.example.easytodolist;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+
+public class AlarmReciever extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+
+        //Toast.makeText(context, context.getString(R.string.Alertnotifty) + intent.getStringExtra("title") , Toast.LENGTH_LONG).show();
+        String Title = intent.getStringExtra("title");
+        Intent x = new Intent(context, Alertt.class);
+        x.putExtra("title", Title);
+        x.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(x);
+    }
+}

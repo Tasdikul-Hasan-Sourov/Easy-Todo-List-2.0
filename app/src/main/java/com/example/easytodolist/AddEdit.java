@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -170,6 +171,31 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
             }
             setResult(RESULT_OK, data);
             finish();
+            Calendar calender = Calendar.getInstance();
+            calender.clear();
+            calender.set(Calendar.MONTH, day);
+            calender.set(Calendar.DAY_OF_MONTH, month);
+            calender.set(Calendar.YEAR, year);
+            calender.set(Calendar.HOUR, hour);
+            calender.set(Calendar.MINUTE, minute);
+            calender.set(Calendar.SECOND, 00);
+
+            AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(this, NotificManager.class);
+            Intent inten = new Intent(this, AlarmReciever.class);
+            String alertTitle = addTitle.getText().toString();
+            intent.putExtra(("Title"), alertTitle);
+            String alertitle = addTitle.getText().toString();
+            String alertContent=addDes.getText().toString();
+            intent.putExtra("hello", alertitle);
+            intent.putExtra("hello2", alertContent);
+
+            PendingIntent pendingInten = PendingIntent.getBroadcast(this, 0, inten, 0);
+
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingInten);
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingIntent);
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
 
         }
