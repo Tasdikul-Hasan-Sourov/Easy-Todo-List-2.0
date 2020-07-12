@@ -1,24 +1,50 @@
 package com.example.easytodolist;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class AddEdit extends AppCompatActivity implements View.OnClickListener{
+    public static final String EXTRA_ID =
+            "com.example.easytodolist.EXTRA_ID";
+    public static final String EXTRA_TITLE =
+            "com.example.easytodolist.EXTRA_TITLE";
+    public static final String EXTRA_DESCRIPTION =
+            "com.example.easytodolist.EXTRA_DESCRIPTION";
+    public static final String EXTRA_DATE =
+            "com.example.easytodolist.EXTRA_DATE";
+    public static final String EXTRA_TIME =
+            "com.example.easytodolist.EXTRA_TIME ";
+
     ImageButton calenderpicker, timepicker;
+    Button saveItem,cancelItem;
     private int year, month, day, hour, minute;
     TextView txtDate,txtTime;
+    EditText addTitle,addDes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +52,34 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_add_edit);
         calenderpicker = (ImageButton) findViewById(R.id.calendarId);
         timepicker = (ImageButton) findViewById(R.id.timeId);
+        saveItem = (Button) findViewById(R.id.saveItem);
+        cancelItem = (Button) findViewById(R.id.cancelItem);
+        addTitle=(EditText) findViewById(R.id.addTitle);
+        addDes=(EditText) findViewById(R.id.addDes);
         txtDate=(TextView)findViewById(R.id.test);
         txtTime=(TextView)findViewById(R.id.test2);
+        TextView topText=(TextView) findViewById(R.id.topText);
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.hide();
         calenderpicker.setOnClickListener(this);
         timepicker.setOnClickListener(this);
+        saveItem.setOnClickListener(this);
+        cancelItem.setOnClickListener(this);
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_ID)) {
+            addTitle.setText(intent.getStringExtra(EXTRA_TITLE));
+            addDes.setText(intent.getStringExtra(EXTRA_DESCRIPTION));
+            txtDate.setText(intent.getStringExtra(EXTRA_DATE));
+            txtTime.setText(intent.getStringExtra(EXTRA_TIME));
+            addTitle.getText().toString();
+            String pp=addTitle.getText().toString();
+            topText.setText(pp);
+        } else {
+
+        }
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -84,7 +133,7 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
                             }
                             String min = "";
                             if (minute < 10)
-                                min = "0" + minute ;
+                                min = "0" + minute;
                             else
                                 min = String.valueOf(minute);
 
@@ -95,6 +144,35 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
             timePickerDialog.show();
 
 
+        }
+        if(v==saveItem){
+
+            String title = addTitle.getText().toString();
+            String description = addDes.getText().toString();
+            String date= txtDate.getText().toString();
+            String time= txtTime.getText().toString();
+            if (description.trim().isEmpty()||title.trim().isEmpty()) {
+                Toast.makeText(this, "Please insert Title, Description and Set date and time", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent data = new Intent();
+            data.putExtra(EXTRA_TITLE, title);
+            data.putExtra(EXTRA_DESCRIPTION, description);
+            data.putExtra(EXTRA_DATE, date);
+            data.putExtra(EXTRA_TIME,time);
+            int id = getIntent().getIntExtra(EXTRA_ID, -1);
+            if (id != -1) {
+                data.putExtra(EXTRA_ID, id);
+            }
+            setResult(RESULT_OK, data);
+            finish();
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+
+        }
+        if(v==cancelItem){
+            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }

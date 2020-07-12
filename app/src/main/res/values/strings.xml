@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Easy Todo List</string>
+    <string name="search">Search</string>
     <string-array name="types">
         <item>Today</item>
         <item>This week</item>

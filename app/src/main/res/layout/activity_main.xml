@@ -8,18 +8,15 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:orientation="horizontal"
+        android:id="@+id/ttt"
         android:background="@drawable/maintopbg">
-        <Spinner
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:entries="@array/types"/>
         <SearchView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="200dp"/>
+            android:id="@+id/searchtiew"
+            />
 
     </LinearLayout>
    <LinearLayout
@@ -29,6 +26,7 @@
        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
+           android:background="@drawable/recbg"
            android:orientation="vertical">
            <com.google.android.material.floatingactionbutton.FloatingActionButton
                android:layout_width="wrap_content"

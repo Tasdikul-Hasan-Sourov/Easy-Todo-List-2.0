@@ -3,19 +3,22 @@ package com.example.easytodolist;
 import android.widget.TimePicker;
 
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.sql.Date;
 import java.sql.Time;
 
 @Entity(tableName = "todo_table")
 public class Todo {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
     private String description;
-    Date date;
-    Time time;
+    private String date;
+    private String time;
 
-    public Todo(String title, String description, Date date, Time time) {
+    public Todo(String title, String description, String date, String time) {
         this.title = title;
         this.description = description;
         this.date = date;
@@ -46,19 +49,19 @@ public class Todo {
         this.description = description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }

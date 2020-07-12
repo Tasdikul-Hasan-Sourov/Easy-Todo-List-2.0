@@ -25,7 +25,7 @@ public class TodoViewModel extends AndroidViewModel {
     public void delete(Todo todo) {
         repository.delete(todo);
     }
-    public void deleteAllIncome() {
+    public void deleteAllTodo() {
         repository.deleteAllTodo();
     }
     public LiveData<List<Todo>> getAllTodo() {
