@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
     private int year, month, day, hour, minute;
     TextView txtDate,txtTime;
     EditText addTitle,addDes;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
         addDes=(EditText) findViewById(R.id.addDes);
         txtDate=(TextView)findViewById(R.id.test);
         txtTime=(TextView)findViewById(R.id.test2);
+        back=(ImageView) findViewById(R.id.back);
         TextView topText=(TextView) findViewById(R.id.topText);
         ActionBar actionBar=getSupportActionBar();
         actionBar.hide();
@@ -65,6 +68,7 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
         timepicker.setOnClickListener(this);
         saveItem.setOnClickListener(this);
         cancelItem.setOnClickListener(this);
+        back.setOnClickListener(this);
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_ID)) {
             addTitle.setText(intent.getStringExtra(EXTRA_TITLE));
@@ -171,6 +175,11 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
         }
         if(v==cancelItem){
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        if(v==back){
+            Intent intent=new Intent(AddEdit.this,MainActivity.class);
             startActivity(intent);
             finish();
         }

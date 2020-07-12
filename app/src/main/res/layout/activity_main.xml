@@ -15,14 +15,22 @@
         <SearchView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="8dp"
             android:id="@+id/searchtiew"
+            android:queryHint="Search.."
+            android:searchIcon="@drawable/ic_search"
+            android:queryBackground="@drawable/edittext"
+            android:paddingLeft="8dp"
+
             />
 
     </LinearLayout>
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_marginTop="-70dp">
+       android:layout_marginTop="-60dp">
        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
@@ -39,6 +47,7 @@
                android:backgroundTint="@color/pink"
                android:layout_margin="20dp"/>
            <androidx.recyclerview.widget.RecyclerView
+               android:layout_marginTop="10dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:id="@+id/recList">
