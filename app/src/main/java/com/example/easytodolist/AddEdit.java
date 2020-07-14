@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AddEdit extends AppCompatActivity implements View.OnClickListener{
+
     public static final String EXTRA_ID =
             "com.example.easytodolist.EXTRA_ID";
     public static final String EXTRA_TITLE =
@@ -41,7 +42,6 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
             "com.example.easytodolist.EXTRA_DATE";
     public static final String EXTRA_TIME =
             "com.example.easytodolist.EXTRA_TIME ";
-
     ImageButton calenderpicker, timepicker;
     Button saveItem,cancelItem;
     private int year, month, day, hour, minute;
@@ -54,6 +54,7 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit);
         calenderpicker = (ImageButton) findViewById(R.id.calendarId);
+
         timepicker = (ImageButton) findViewById(R.id.timeId);
         saveItem = (Button) findViewById(R.id.saveItem);
         cancelItem = (Button) findViewById(R.id.cancelItem);
@@ -84,14 +85,12 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-
-
     @Override
     public void onClick(View v) {
         if (v == calenderpicker) {
 
             // Get Current Date
-            final Calendar c = Calendar.getInstance();
+             Calendar c = Calendar.getInstance();
             year = c.get(Calendar.YEAR);
             month = c.get(Calendar.MONTH);
             day = c.get(Calendar.DAY_OF_MONTH);
@@ -103,8 +102,12 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int month, int day) {
-
-                            txtDate.setText(day + "-" + (month + 1) + "-" + year);
+                            Calendar c = Calendar.getInstance();
+                            c.set(Calendar.YEAR, year);
+                            c.set(Calendar.MONTH, month);
+                            c.set(Calendar.DAY_OF_MONTH,day);
+                            updateDate(c);
+                           // txtDate.setText(day + "-" + (month + 1) + "-" + year);
 
                         }
                     }, year, month, day);
@@ -113,7 +116,7 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
         if (v == timepicker) {
 
             // Get Current Time
-            final Calendar c = Calendar.getInstance();
+            Calendar c = Calendar.getInstance();
             hour = c.get(Calendar.HOUR_OF_DAY);
             minute = c.get(Calendar.MINUTE);
 
@@ -124,26 +127,30 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
                         @Override
                         public void onTimeSet(TimePicker view, int hour,
                                               int minute) {
-                            String timeSet = "";
-                            if (hour > 12) {
-                                hour -= 12;
-                                timeSet = "PM";
-                            } else if (hour == 0) {
-                                hour += 12;
-                                timeSet = "AM";
-                            } else if (hour == 12){
-                                timeSet = "PM";
-                            }else{
-                                timeSet = "AM";
-                            }
-                            String min = "";
-                            if (minute < 10)
-                                min = "0" + minute;
-                            else
-                                min = String.valueOf(minute);
-
-
-                            txtTime.setText(hour + ":" + min+" "+timeSet);
+                            Calendar c = Calendar.getInstance();
+                            c.set(Calendar.HOUR_OF_DAY, hour);
+                            c.set(Calendar.MINUTE, minute);
+                            updateTime(c);
+                          // startAlarm(c);
+                          //  String timeSet = "";
+                           // if (hour > 12) {
+                             //   hour -= 12;
+                               // timeSet = "PM";
+                           //} else if (hour == 0) {
+                             //   hour += 12;
+                               // timeSet = "AM";
+                            //} else if (hour == 12){
+                              //  timeSet = "PM";
+                            //}else{
+                              //  timeSet = "AM";
+                           // }
+                            //String min = "";
+                            //if (minute < 10)
+                              //  min = "0" + minute;
+                            //else
+                              //  min = String.valueOf(minute);
+                         //   txtTime.setText(hour + ":" + min+" "+timeSet);
+                           // txtTime.setText(hour + ":" + minute);
                         }
                     }, hour, minute, false);
             timePickerDialog.show();
@@ -171,31 +178,6 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
             }
             setResult(RESULT_OK, data);
             finish();
-            Calendar calender = Calendar.getInstance();
-            calender.clear();
-            calender.set(Calendar.MONTH, day);
-            calender.set(Calendar.DAY_OF_MONTH, month);
-            calender.set(Calendar.YEAR, year);
-            calender.set(Calendar.HOUR, hour);
-            calender.set(Calendar.MINUTE, minute);
-            calender.set(Calendar.SECOND, 00);
-
-            AlarmManager alarmMgr = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(this, NotificManager.class);
-            Intent inten = new Intent(this, AlarmReciever.class);
-            String alertTitle = addTitle.getText().toString();
-            intent.putExtra(("Title"), alertTitle);
-            String alertitle = addTitle.getText().toString();
-            String alertContent=addDes.getText().toString();
-            intent.putExtra("hello", alertitle);
-            intent.putExtra("hello2", alertContent);
-
-            PendingIntent pendingInten = PendingIntent.getBroadcast(this, 0, inten, 0);
-
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingInten);
-
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingIntent);
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
 
         }
@@ -209,5 +191,27 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
             startActivity(intent);
             finish();
         }
+    }
+
+    private void updateTime(Calendar c) {
+        String timeText = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+        txtTime.setText(timeText);
+        startAlarm(c);
+
+    }
+    private void updateDate(Calendar c) {
+        String dateText = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
+        txtDate.setText(dateText);
+
+    }
+
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 0);
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 }

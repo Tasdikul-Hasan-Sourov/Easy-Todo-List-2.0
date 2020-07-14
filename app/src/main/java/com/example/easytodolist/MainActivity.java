@@ -38,6 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,16 +52,19 @@ public class MainActivity extends AppCompatActivity {
     public static final int ADD_TODO_REQUEST = 1;
     public static final int EDIT_TODO_REQUEST = 2;
     private TodoViewModel todoViewModel;
-    private SearchView search;
     private TodoAdapter todoAdapter;
+    TextView emptxt,note;
+    ImageView empimg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        emptxt=findViewById(R.id.emptxt);
+        empimg=findViewById(R.id.no_task);
+        note=findViewById(R.id.notech);
         todoAdapter = new TodoAdapter(this);
         FloatingActionButton buttonAddNote = findViewById(R.id.adinFloat);
-        search= findViewById(R.id.searchtiew);
         buttonAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
                 DeleteTask(todoAdapter.getTodoAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(MainActivity.this, "Task deleted", Toast.LENGTH_SHORT).show();
-
 
             }
         }).attachToRecyclerView(recyclerView);
@@ -106,16 +108,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, EDIT_TODO_REQUEST);
             }
         });
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+            public void onChildViewAttachedToWindow(@NonNull View view) {
+                emptxt.setVisibility(View.INVISIBLE);
+                empimg.setVisibility(view.INVISIBLE);
+                note.setVisibility(view.VISIBLE);
+
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                todoAdapter.getFilter().filter(newText);
-                return false;
+            public void onChildViewDetachedFromWindow(@NonNull View view) {
+                emptxt.setVisibility(View.VISIBLE);
+                empimg.setVisibility(view.VISIBLE);
+                note.setVisibility(view.INVISIBLE);
+
+
             }
         });
 
@@ -128,18 +136,23 @@ public class MainActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setMessage("Do you want to delete the task?")
                 .setTitle("WARNING!!!")
+                .setCancelable(false)
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         todoViewModel.delete(position);
+                        Toast.makeText(MainActivity.this, "Task deleted", Toast.LENGTH_SHORT).show();
 
                     }
                 })
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        dialogInterface.cancel();
+                        Intent nn=new Intent(getApplicationContext(),MainActivity.class);
+                        startActivity(nn);
+                        finish();
                     }
                 })
                 .show();
@@ -181,6 +194,21 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.searchtiew);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                todoAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -192,10 +220,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "All Tasks deleted", Toast.LENGTH_SHORT).show();
                 return true;
 
-
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
 }

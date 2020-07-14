@@ -5,4 +5,10 @@
         android:id="@+id/delete_all_task"
         android:title="Delete all Tasks"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/searchtiew"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"/>
 </menu>

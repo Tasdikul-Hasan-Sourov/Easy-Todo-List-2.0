@@ -53,7 +53,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> im
         notifyDataSetChanged();
     }
 
-
     public Todo getTodoAt(int position) {
         return todos.get(position);
     }
@@ -113,7 +112,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> im
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                notifyDataSetChanged();
+               notifyDataSetChanged();
             }
         };
     }

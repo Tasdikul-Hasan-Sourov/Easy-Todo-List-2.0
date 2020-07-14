@@ -9,28 +9,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:orientation="horizontal"
-        android:id="@+id/ttt"
+        android:orientation="vertical"
         android:background="@drawable/maintopbg">
-        <SearchView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="8dp"
-            android:id="@+id/searchtiew"
-            android:queryHint="Search.."
-            android:searchIcon="@drawable/ic_search"
-            android:queryBackground="@drawable/edittext"
-            android:paddingLeft="8dp"
-
-            />
-
+            android:id="@+id/notech"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:text="Note: Swipe left or right to delete task"
+            android:textColor="#fff"
+            android:textSize="13sp"/>
     </LinearLayout>
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_marginTop="-60dp">
+       android:layout_marginTop="-80dp">
        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
@@ -46,6 +40,20 @@
                android:src="@drawable/ic_add"
                android:backgroundTint="@color/pink"
                android:layout_margin="20dp"/>
+           <ImageView
+               android:layout_marginTop="250dp"
+               android:id="@+id/no_task"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_baseline_android_24" />
+           <TextView
+               android:layout_marginTop="290dp"
+               android:id="@+id/emptxt"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="No Tasks"
+               android:textSize="25sp"
+               android:textAlignment="center"/>
            <androidx.recyclerview.widget.RecyclerView
                android:layout_marginTop="10dp"
                android:layout_width="match_parent"
