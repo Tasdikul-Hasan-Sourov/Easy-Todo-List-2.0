@@ -48,11 +48,13 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="-50dp"
                     android:layout_marginTop="5dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Time:"
                     android:textColor="@color/violetBlue"
+                    android:layout_gravity="center"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
                 <TextView
@@ -61,6 +63,7 @@
                     android:layout_marginTop="1dp"
                     android:layout_marginLeft="5dp"
                     android:textSize="16sp"
+                    android:layout_gravity="center"
                     android:text="11.00 PM"
                     android:id="@+id/itemTime"/>
                 </LinearLayout>
