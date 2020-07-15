@@ -28,7 +28,9 @@
                         android:text="Title"
                         android:textColor="@color/violetBlue"
                         android:textSize="35sp"
-                        android:id="@+id/itemTitle"/>
+                        android:id="@+id/itemTitle"
+                        android:paddingLeft="5dp"
+                       />
                     <TextView
                         android:layout_width="240dp"
                         android:layout_height="wrap_content"

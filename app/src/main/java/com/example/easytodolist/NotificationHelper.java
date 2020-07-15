@@ -5,9 +5,11 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+
 import android.net.Uri;
 import android.os.Build;
 
@@ -42,11 +44,12 @@ public class NotificationHelper extends ContextWrapper {
             PendingIntent.FLAG_UPDATE_CURRENT);
     public NotificationCompat.Builder getChannelNotification() {
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
-                .setContentTitle("Task")
+
+                .setContentTitle("Easy Todo list")
                 .setContentText("You Have Tasks to do")
-               .setSmallIcon(R.drawable.ic_search)
+               .setSmallIcon(R.drawable.ic_baseline_featured_play_list_24)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setDefaults(Notification.DEFAULT_SOUND)
+                .setSound(Uri.parse("android.resource://com.example.easytodolist/" + R.raw.swiftly))
                 .setContentIntent(pIntent);
 
 

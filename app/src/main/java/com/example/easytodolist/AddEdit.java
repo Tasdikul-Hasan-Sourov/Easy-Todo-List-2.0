@@ -45,6 +45,7 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
     ImageButton calenderpicker, timepicker;
     Button saveItem,cancelItem;
     private int year, month, day, hour, minute;
+    private int tyear, tmonth, tday, thour, tminute;
     TextView txtDate,txtTime;
     EditText addTitle,addDes;
     ImageView back;
@@ -106,8 +107,11 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
                             c.set(Calendar.YEAR, year);
                             c.set(Calendar.MONTH, month);
                             c.set(Calendar.DAY_OF_MONTH,day);
-                            updateDate(c);
+                           updateDate(c);
                            // txtDate.setText(day + "-" + (month + 1) + "-" + year);
+                            tday=day;
+                            tmonth=month;
+                            tyear=year;
 
                         }
                     }, year, month, day);
@@ -129,28 +133,29 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
                                               int minute) {
                             Calendar c = Calendar.getInstance();
                             c.set(Calendar.HOUR_OF_DAY, hour);
-                            c.set(Calendar.MINUTE, minute);
-                            updateTime(c);
-                          // startAlarm(c);
-                          //  String timeSet = "";
-                           // if (hour > 12) {
-                             //   hour -= 12;
-                               // timeSet = "PM";
+                            c.set(Calendar.MINUTE,minute);
+                              updateTime(c);
+                              thour=hour;
+                              tminute=minute;
+                           //startAlarm(c);
+                          // String timeSet = "";
+                            //if (hour > 12) {
+                              // hour -= 12;
+                               //timeSet = "PM";
                            //} else if (hour == 0) {
-                             //   hour += 12;
-                               // timeSet = "AM";
+                              //  hour += 12;
+                             //   timeSet = "AM";
                             //} else if (hour == 12){
                               //  timeSet = "PM";
                             //}else{
                               //  timeSet = "AM";
-                           // }
+                            //}
                             //String min = "";
                             //if (minute < 10)
                               //  min = "0" + minute;
                             //else
                               //  min = String.valueOf(minute);
-                         //   txtTime.setText(hour + ":" + min+" "+timeSet);
-                           // txtTime.setText(hour + ":" + minute);
+                           //txtTime.setText(hour + ":" + min+" "+timeSet);
                         }
                     }, hour, minute, false);
             timePickerDialog.show();
@@ -178,6 +183,14 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
             }
             setResult(RESULT_OK, data);
             finish();
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR,tyear);
+            c.set(Calendar.MONTH,tmonth);
+            c.set(Calendar.DAY_OF_MONTH,tday);
+            c.set(Calendar.HOUR_OF_DAY,thour);
+            c.set(Calendar.MINUTE,tminute);
+            c.set(Calendar.SECOND,0);
+            startAlarm(c);
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
 
         }
@@ -196,7 +209,6 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
     private void updateTime(Calendar c) {
         String timeText = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
         txtTime.setText(timeText);
-        startAlarm(c);
 
     }
     private void updateDate(Calendar c) {
