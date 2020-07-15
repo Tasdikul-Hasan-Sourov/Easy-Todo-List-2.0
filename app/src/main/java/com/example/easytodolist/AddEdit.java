@@ -226,4 +226,10 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
         }
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
+    @Override
+    public void onBackPressed() {
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+    }
+
 }

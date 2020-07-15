@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private TodoAdapter todoAdapter;
     TextView emptxt,note;
     ImageView empimg;
+    int backbuttoncount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,6 +225,18 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+    @Override
+    public void onBackPressed() {
+        if(backbuttoncount >= 1){
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);}
+        else{
+            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+            backbuttoncount++;
+        }
     }
 
 }
