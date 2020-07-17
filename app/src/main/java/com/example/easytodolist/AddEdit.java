@@ -108,7 +108,6 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
                             c.set(Calendar.MONTH, month);
                             c.set(Calendar.DAY_OF_MONTH,day);
                            updateDate(c);
-                           // txtDate.setText(day + "-" + (month + 1) + "-" + year);
                             tday=day;
                             tmonth=month;
                             tyear=year;
@@ -137,25 +136,6 @@ public class AddEdit extends AppCompatActivity implements View.OnClickListener{
                               updateTime(c);
                               thour=hour;
                               tminute=minute;
-                           //startAlarm(c);
-                          // String timeSet = "";
-                            //if (hour > 12) {
-                              // hour -= 12;
-                               //timeSet = "PM";
-                           //} else if (hour == 0) {
-                              //  hour += 12;
-                             //   timeSet = "AM";
-                            //} else if (hour == 12){
-                              //  timeSet = "PM";
-                            //}else{
-                              //  timeSet = "AM";
-                            //}
-                            //String min = "";
-                            //if (minute < 10)
-                              //  min = "0" + minute;
-                            //else
-                              //  min = String.valueOf(minute);
-                           //txtTime.setText(hour + ":" + min+" "+timeSet);
                         }
                     }, hour, minute, false);
             timePickerDialog.show();

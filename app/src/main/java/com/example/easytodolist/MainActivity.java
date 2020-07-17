@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             public void onChildViewAttachedToWindow(@NonNull View view) {
                 emptxt.setVisibility(View.INVISIBLE);
                 empimg.setVisibility(view.INVISIBLE);
-                note.setVisibility(view.VISIBLE);
 
             }
 
@@ -122,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
             public void onChildViewDetachedFromWindow(@NonNull View view) {
                 emptxt.setVisibility(View.VISIBLE);
                 empimg.setVisibility(view.VISIBLE);
-                note.setVisibility(view.INVISIBLE);
 
 
             }
@@ -208,9 +206,10 @@ public class MainActivity extends AppCompatActivity {
                 todoAdapter.getFilter().filter(newText);
                 return false;
             }
-        });
 
+        });
         return true;
+
     }
 
     @Override

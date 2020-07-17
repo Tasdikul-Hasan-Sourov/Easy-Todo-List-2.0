@@ -6,10 +6,12 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 
+import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 
@@ -20,6 +22,7 @@ import java.io.IOException;
 public class NotificationHelper extends ContextWrapper {
     public static final String channelID = "channelID";
     public static final String channelName = "Channel Name";
+    Uri soundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"+ getApplicationContext().getPackageName() + "/" + R.raw.swiftly);
     private NotificationManager mManager;
 
     public NotificationHelper(Context base) {
@@ -31,6 +34,11 @@ public class NotificationHelper extends ContextWrapper {
     @TargetApi(Build.VERSION_CODES.O)
     private void createChannel() {
         NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH);
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .build();
+                channel.setSound(soundUri,audioAttributes);
         getManager().createNotificationChannel(channel);
     }
     public NotificationManager getManager() {
@@ -49,7 +57,7 @@ public class NotificationHelper extends ContextWrapper {
                 .setContentText("You Have Tasks to do")
                .setSmallIcon(R.drawable.ic_baseline_featured_play_list_24)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setSound(Uri.parse("android.resource://com.example.easytodolist/" + R.raw.swiftly))
+                .setSound(Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"+ getApplicationContext().getPackageName() + "/" + R.raw.swiftly))
                 .setContentIntent(pIntent);
 
 

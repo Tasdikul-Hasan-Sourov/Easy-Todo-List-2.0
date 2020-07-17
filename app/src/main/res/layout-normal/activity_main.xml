@@ -20,6 +20,7 @@
             android:text="Note: Swipe left or right to delete task"
             android:textColor="#fff"
             android:textSize="13sp"/>
+
     </LinearLayout>
    <LinearLayout
        android:layout_width="match_parent"

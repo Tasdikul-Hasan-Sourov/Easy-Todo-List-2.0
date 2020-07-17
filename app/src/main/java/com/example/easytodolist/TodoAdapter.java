@@ -47,8 +47,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoHolder> im
     public int getItemCount() {
         return todos == null ? 0 : todos.size();
     }
-  public void setTodos(List<Todo> todos) {
-        this.todos =todos ;
+  public void setTodos(List<Todo> todo) {
+        this.todos =todo ;
         arrayList.addAll(todos);
         notifyDataSetChanged();
     }
